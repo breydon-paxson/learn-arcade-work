@@ -77,28 +77,28 @@ Any step but west will result in plunging toward your death!
             else:
                 current_room = next_room
 
-        if user_choice.lower() == "east" or user_choice.lower() == "e":
+        elif user_choice.lower() == "east" or user_choice.lower() == "e":
             next_room = room_list[current_room].east
             if next_room is None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        if user_choice.lower() == "south" or user_choice.lower() == "s":
+        elif user_choice.lower() == "south" or user_choice.lower() == "s":
             next_room = room_list[current_room].south
             if next_room is None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        if user_choice.lower() == "west" or user_choice.lower() == "w":
+        elif user_choice.lower() == "west" or user_choice.lower() == "w":
             next_room = room_list[current_room].west
             if next_room is None:
                 print("You can't go that way.")
             else:
                 current_room = next_room
 
-        if user_choice.lower() == "quit" or user_choice.lower() == "q":
+        elif user_choice.lower() == "quit" or user_choice.lower() == "q":
             done = True
 
 

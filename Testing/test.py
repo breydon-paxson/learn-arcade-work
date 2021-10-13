@@ -34,10 +34,23 @@ class MyGame(arcade.Window):
         # Create our ball
         self.ball = Ball(50, 50, 15, arcade.color.AUBURN)
 
+        self.set_mouse_visible(False)
+
     def on_draw(self):
         """ Called whenever we need to draw the window. """
         arcade.start_render()
         self.ball.draw()
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        self.ball.position_x = x
+        self.ball.position_y = y
+
+    def on_mouse_press(self, x, y, button, modifiers):
+
+        if button == arcade.MOUSE_BUTTON_LEFT:
+            print("Left button hit at ", x, y)
+        elif button == arcade.MOUSE_BUTTON_RIGHT:
+            print("Right button hit at ", x, y)
 
 
 def main():
