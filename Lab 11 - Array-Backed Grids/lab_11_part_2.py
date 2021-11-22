@@ -64,6 +64,10 @@ class MyGame(arcade.Window):
                 arcade.draw_rectangle_filled(x, y, WIDTH, HEIGHT, color)
 
     def on_mouse_press(self, x, y, button, modifiers):
+        """
+        Called when the user presses a mouse button.
+        """
+
         # Change the x/y screen coordinates to grid coordinates
         column = x // (WIDTH + MARGIN)
         row = y // (HEIGHT + MARGIN)
@@ -80,32 +84,36 @@ class MyGame(arcade.Window):
             else:
                 self.grid[row][column] = 0
 
-            if row < (ROW_COUNT - 1):
-                if self.grid[row + 1][column] == 0:
-                    self.grid[row + 1][column] = 1
-                else:
-                    self.grid[row + 1][column] = 0
+            total = 0
+            for row in range(ROW_COUNT):
+                for column in range(COLUMN_COUNT):
+                    if self.grid[row][column] == 1:
+                        total += 1
+                print("Total of", total, "cells are selected.")
 
-            if row >= 1:
-                if self.grid[row - 1][column] == 0:
-                    self.grid[row - 1][column] = 1
-                else:
-                    self.grid[row - 1][column] = 0
+            for row in range(ROW_COUNT):
+                cell_count = 0
+                continuous_count = 0
+                for column in range(COLUMN_COUNT):
+                    if self.grid[row][column] == 1:
+                        cell_count += 1
+                        continuous_count += 1
+                    elif continuous_count > 2:
+                        print("There are", continuous_count, "continuous blocks selected on row", row)
+                if continuous_count > 2:
+                    print("There are", continuous_count, "continuous blocks selected on row", row)
+                print("Row", row, "has", continuous_count, "cells selected.")
 
-            if column < (COLUMN_COUNT - 1):
-                if self.grid[row][column + 1] == 0:
-                    self.grid[row][column + 1] = 1
-                else:
-                    self.grid[row][column + 1] = 0
-
-            if column >= 1:
-                if self.grid[row][column - 1] == 0:
-                    self.grid[row][column - 1] = 1
-                else:
-                    self.grid[row][column - 1] = 0
+            for column in range(COLUMN_COUNT):
+                cell_count = 0
+                for row in range(ROW_COUNT):
+                    if self.grid[row][column] == 1:
+                        cell_count += 1
+                print("Column", column, "has", cell_count, "cells selected.")
 
 
 def main():
+
     window = MyGame(SCREEN_WIDTH, SCREEN_HEIGHT)
     arcade.run()
 
