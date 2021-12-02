@@ -1,5 +1,8 @@
 """ Lab 12 Final """
 
+# All images and sounds came from Python Arcade Library
+# https://api.arcade.academy/en/latest/index.html
+
 import random
 import arcade
 
