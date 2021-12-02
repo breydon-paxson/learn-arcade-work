@@ -1,0 +1,111 @@
+Breydon Paxson
+
+December 1, 2021
+
+                        Quantitative Reasoning Reflection
+
+                                 Question 1
+We will use the if statement when we are looking to run a function. But
+only if the code is looking at the right thing. For example, when we did the
+spell check lab, if our word was found. The If statement would see it come up
+and finish the code for us.
+
+We learned how to write different classes. The classes come into effect when
+you are trying to make a game with different objects. For example, in my final
+lab, I have a class for the big and small meteor. This is all to create their
+own separate code to make them do different things.
+
+Functions are used in almost every single lab we did. But for the example, lets
+look at lab 3. I used the function draw to create an image on the screen.
+Functions are used to show what exactly the code is trying to do. If you want
+something to draw, you use the draw function while if you want to open the
+function you do the def main.
+
+Loops are something that can be used a lot depending on your project. In lab 5
+we made blocks appear using loops. They are used to tell the code how long to
+print an image out or how short to print it out. If you want something to loop
+6 times the code you write will include the number 7.
+
+I loved using sample pieces of code throughout the semester. Being able to see
+the code at first is amazing. If you are given a sample piece of code you can
+play around with it to see what the code does. Then when you get a feeling for
+it. You can change it to what you need to do.
+
+                                Question 2
+One of the biggest ways that you can communicate with another programmer is
+using comments. If you want to create a ship write above the function what you
+are creating. The more descriptive you write the better chances you can get
+your point across to the other programmer.
+
+Another way to communicate to a different programmer is by using descriptive
+function names. If you use every function as "dog", how will you know what "dog"
+is what. Is it the brown or black one. You may know this but another programmer
+will not.
+
+One way you can communicate as well is using push comments. When you are trying
+to git pull, commit, and push your code into GitHub. The comments that you add
+at the end of commit can be something descriptive. When you do this, if you mess
+up you can go back and see what commit you did right before the mess happened.
+This allows different programmers to see where you uploaded different checkins.
+
+The way you name your variables is also important. It is the same way with the
+functions. If you name different objects "a", "b", "c" and so on how will you
+know which one is which. Give them a specific name so that even a child could
+understand it.
+
+If you write every single line of code line after line, no indents, how would
+anybody be able to locate a specific piece quickly. If you line up all your
+code with the same objects they will be able to understand what is going on.
+
+                                    Question 3
+One of the easiest ways to test your code is to hit the run arrow butting in
+the top right corner. By clicking on this button the program will run your code
+to see if it works. If it is working, it will print out/run your code. If it
+doesn't work then it will give you some errors.
+
+These errors are also another way to evaluate the accuracy of your code. The
+errors themselves can tell you what line the error was on, plus it will tell
+you a phrase like "expected indented line" to show that you need to indent that
+line of code.
+
+Another way you can check for accuracy on your code is to run it through a
+validator website. Sometimes PyCharm doesn't check all of your errors but the
+validator will pick your code apart. By doing this it can perfect your code.
+Making it one of the best ways to check your code.
+
+There is also a greed bug symbol at the top right of PyCharm that debugs your
+code. By pressing this button it will take your code and put it through multiply
+scenarios to see if your code is capably of handling it. This can also show
+you the strength of your code and how fast it can run things.
+
+And the one way I used to test the accuracy of my code was to check the book
+and other students. When I got done with my code and printed my answers, I
+would check the book and my peer students to see if what I got was even close
+to what they got. By doing this it built my confidence and allowed my coding
+skills to grow.
+
+                                    Question 4
+When you are stuck just using numbers, you can't really improve yourself. The
+scores might go up as the semester goes on. But that doesn't teach you anything.
+Some of the greatest people say that you can never succeed unless you first fail.
+
+Because the numbers might not fully represent a persons' ability, robots can
+never take over algorithms. I have taken multiple tests and quizes that I fail
+but, I still get an A in the class just because I don't understand that one topic
+till later down the road.
+
+This also fits in why our test scores can't be the only thing to evaluate our
+knowledge. There are always going to be people who struggle in certain topics
+that won't understand the topic till later in the class. This alone is why the
+test scores can't be the only thing that grades us.
+
+The same things also goes with the teachers. You can't grade the teacher based
+on their students grades. Some of my favorite teachers I have had have been in
+the hardest and worst classes. I don't like the topic they teach but that doesn't
+mean they are the worst teacher. It just means that I struggled with it.
+
+But this doesn't have to be just school related though. Most athletes are based
+on their sportsmanship. You can be the greatest player ever but if you are one
+of the meanest and ruthless player. You won't be able to play a lot.
+This makes it almost impossible to just look at somebodies stats to determine
+how good they are.
