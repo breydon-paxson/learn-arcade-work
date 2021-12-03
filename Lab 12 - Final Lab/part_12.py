@@ -124,12 +124,12 @@ class MyGame(arcade.Window):
 
         output = f"Score: {self.score}"
         arcade.draw_text(output, 10, 20, arcade.color.WHITE, 28)
-        if len(self.big_meteor_list) == 0:
+        if len(self.big_meteor_list or self.small_meteor_list) == 0:
             gameover = f"GAME OVER"
             arcade.draw_text(gameover, 300, 300, arcade.color.RED, 25)
 
     def on_mouse_motion(self, x, y, dx, dy):
-        if len(self.big_meteor_list) > 0:
+        if len(self.big_meteor_list or self.small_meteor_list) > 0:
             self.ship_sprite.center_x = x
             self.ship_sprite.center_y = y
 
@@ -169,7 +169,7 @@ class MyGame(arcade.Window):
                 bullet.remove_from_sprite_lists()
 
     def update(self, delta_time):
-        if len(self.big_meteor_list) > 0:
+        if len(self.big_meteor_list or self.small_meteor_list) > 0:
             self.big_meteor_list.update()
             self.small_meteor_list.update()
         big_meteor_hit_list = arcade.check_for_collision_with_list(self.ship_sprite, self.big_meteor_list)
