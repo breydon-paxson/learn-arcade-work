@@ -212,6 +212,8 @@ class MyGame(arcade.Window):
                 bullet.remove_from_sprite_lists()
 
     def update(self, delta_time):
+        self.ship_sprite.angle += self.ship_sprite.change_angle
+
         if len(self.big_meteor_list or self.small_meteor_list) > 0:
             self.big_meteor_list.update()
             self.small_meteor_list.update()
