@@ -2,7 +2,7 @@
 
 # All images and sounds came from Python Arcade Library
 # https://api.arcade.academy/en/latest/index.html
-
+import math
 import random
 import arcade
 
@@ -13,12 +13,29 @@ SPRITE_SCALING_SMALL_METEOR = 0.5
 SPRITE_SCALING_LASER = .3
 BIG_METEOR_COUNT = 20
 SMALL_METEOR_COUNT = 20
+SCALE = .3
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 BULLET_SPEED = 5
 MAX_PLAYER_BULLETS = 5
+
+ANGLE_SPEED = 5
+
+
+class Ship(arcade.Sprite):
+    def __init__(self, image, scale):
+        super().__init__(image, scale)
+        self.speed = 0
+
+    def update(self):
+        angle_rad = math.radians(self.angle)
+
+        self.angle += self.change_angle
+
+        self.center_x += -self.speed * math.sin(angle_rad)
+        self.center_y += self.speed * math.cos(angle_rad)
 
 
 class Small(arcade.Sprite):
@@ -66,6 +83,7 @@ class MyGame(arcade.Window):
         self.big_meteor_list = None
         self.small_meteor_list = None
         self.bullet_list = None
+        self.ship_life_list = None
 
         self.big_hit_sound = arcade.load_sound("arcade_resources_sounds_error4.wav")
         self.small_hit_sound = arcade.load_sound("arcade_resources_sounds_hit4.wav")
@@ -73,6 +91,7 @@ class MyGame(arcade.Window):
 
         self.ship_sprite = None
         self.score = 0
+        self.lives = 3
 
         self.set_mouse_visible(False)
 
@@ -83,8 +102,19 @@ class MyGame(arcade.Window):
         self.big_meteor_list = arcade.SpriteList()
         self.small_meteor_list = arcade.SpriteList()
         self.bullet_list = arcade.SpriteList()
+        self.ship_life_list = arcade.SpriteList()
 
         self.score = 0
+        self.lives = 3
+
+        # lives
+        cur_pos = 680
+        for i in range(self.lives):
+            life = arcade.Sprite("playerShip1_orange.png", SCALE)
+            life.center_x = cur_pos + life.width
+            life.center_y = life.height
+            cur_pos += life.width
+            self.ship_life_list.append(life)
 
         self.ship_sprite = arcade.Sprite("playerShip1_orange.png", SPRITE_SCALING_SHIP)
         self.ship_sprite.center_x = 50
@@ -119,6 +149,7 @@ class MyGame(arcade.Window):
         self.ship_list.draw()
         self.small_meteor_list.draw()
         self.bullet_list.draw()
+        self.ship_life_list.draw()
 
         arcade.draw_lrwh_rectangle_textured(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, self.background)
 
@@ -127,11 +158,6 @@ class MyGame(arcade.Window):
         if len(self.big_meteor_list or self.small_meteor_list) == 0:
             gameover = f"GAME OVER"
             arcade.draw_text(gameover, 300, 300, arcade.color.RED, 25)
-
-    def on_mouse_motion(self, x, y, dx, dy):
-        if len(self.big_meteor_list or self.small_meteor_list) > 0:
-            self.ship_sprite.center_x = x
-            self.ship_sprite.center_y = y
 
     def on_mouse_press(self, x, y, button, modifiers):
         if len(self.bullet_list) < MAX_PLAYER_BULLETS:
@@ -144,6 +170,23 @@ class MyGame(arcade.Window):
             bullet.bottom = self.ship_sprite.top
             # add the bullet to list
             self.bullet_list.append(bullet)
+
+    def on_key_press(self, key, modifiers):
+        # turn left
+        if key == arcade.key.A:
+            self.ship_sprite.change_angle = ANGLE_SPEED
+        # turn right
+        elif key == arcade.key.D:
+            self.ship_sprite.change_angle = -ANGLE_SPEED
+
+    def on_key_release(self, key, modifiers):
+        if key == arcade.key.A or key == arcade.key.D:
+            self.ship_sprite.change_angle = 0
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        if len(self.big_meteor_list or self.small_meteor_list) > 0:
+            self.ship_sprite.center_x = x
+            self.ship_sprite.center_y = y
 
     def process_ship_bullets(self):
         self.bullet_list.update()
@@ -172,17 +215,31 @@ class MyGame(arcade.Window):
         if len(self.big_meteor_list or self.small_meteor_list) > 0:
             self.big_meteor_list.update()
             self.small_meteor_list.update()
+
         big_meteor_hit_list = arcade.check_for_collision_with_list(self.ship_sprite, self.big_meteor_list)
         for big in big_meteor_hit_list:
             big.remove_from_sprite_lists()
             self.score -= 1
             arcade.play_sound(self.big_hit_sound)
+
         small_meteor_hit_list = arcade.check_for_collision_with_list(self.ship_sprite, self.small_meteor_list)
         for small in small_meteor_hit_list:
             small.remove_from_sprite_lists()
             self.score -= 5
             arcade.play_sound(self.small_hit_sound)
         self.process_ship_bullets()
+
+        ship_lives_list = arcade.check_for_collision_with_list(self.ship_sprite, self.big_meteor_list)
+        for lives in ship_lives_list:
+            lives.remove_from_sprite_lists()
+            self.ship_life_list[0].remove_from_sprite_lists()
+            self.lives -= 1
+
+        ship_lives_list = arcade.check_for_collision_with_list(self.ship_sprite, self.small_meteor_list)
+        for lives in ship_lives_list:
+            lives.remove_from_sprite_lists()
+            self.ship_life_list[0].remove_from_sprite_lists()
+            self.lives -= 1
 
 
 def main():
