@@ -223,25 +223,17 @@ class MyGame(arcade.Window):
             big.remove_from_sprite_lists()
             self.score -= 1
             arcade.play_sound(self.big_hit_sound)
+            self.ship_life_list[0].remove_from_sprite_lists()
+            self.lives -= 1
 
         small_meteor_hit_list = arcade.check_for_collision_with_list(self.ship_sprite, self.small_meteor_list)
         for small in small_meteor_hit_list:
             small.remove_from_sprite_lists()
             self.score -= 5
             arcade.play_sound(self.small_hit_sound)
+            self.ship_life_list[0].remove_from_sprite_lists()
+            self.lives -= 1
         self.process_ship_bullets()
-
-        ship_lives_list = arcade.check_for_collision_with_list(self.ship_sprite, self.big_meteor_list)
-        for lives in ship_lives_list:
-            lives.remove_from_sprite_lists()
-            self.ship_life_list[0].remove_from_sprite_lists()
-            self.lives -= 1
-
-        ship_lives_list = arcade.check_for_collision_with_list(self.ship_sprite, self.small_meteor_list)
-        for lives in ship_lives_list:
-            lives.remove_from_sprite_lists()
-            self.ship_life_list[0].remove_from_sprite_lists()
-            self.lives -= 1
 
 
 def main():
