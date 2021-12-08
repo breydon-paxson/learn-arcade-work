@@ -19,7 +19,7 @@ SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 BULLET_SPEED = 5
-MAX_PLAYER_BULLETS = 5
+MAX_PLAYER_BULLETS = 100
 
 ANGLE_SPEED = 5
 
@@ -155,7 +155,7 @@ class MyGame(arcade.Window):
 
         output = f"Score: {self.score}"
         arcade.draw_text(output, 10, 20, arcade.color.WHITE, 28)
-        if len(self.big_meteor_list or self.small_meteor_list) == 0:
+        if (len(self.big_meteor_list) == 0 and len(self.small_meteor_list)) or len(self.ship_life_list) == 0:
             gameover = f"GAME OVER"
             arcade.draw_text(gameover, 300, 300, arcade.color.RED, 25)
 
@@ -164,10 +164,15 @@ class MyGame(arcade.Window):
             arcade.play_sound(self.gun_sound)
             bullet = arcade.Sprite("laserRed01.png", SPRITE_SCALING_LASER)
             # Bullet speed
-            bullet.change_y = BULLET_SPEED
+            bullet.change_y = \
+                math.cos(math.radians(self.ship_sprite.angle)) * BULLET_SPEED
+            bullet.change_x = \
+                -math.sin(math.radians(self.ship_sprite.angle)) * BULLET_SPEED
+
             # bullet position
             bullet.center_x = self.ship_sprite.center_x
-            bullet.bottom = self.ship_sprite.top
+            bullet.center_y = self.ship_sprite.center_y
+
             # add the bullet to list
             self.bullet_list.append(bullet)
 
@@ -198,8 +203,6 @@ class MyGame(arcade.Window):
             for big_meteor in hit_list:
                 big_meteor.remove_from_sprite_lists()
                 self.score += 1
-            if bullet.bottom > SCREEN_HEIGHT:
-                bullet.remove_from_sprite_lists()
 
         for bullet in self.bullet_list:
             hit_list = arcade.check_for_collision_with_list(bullet, self.small_meteor_list)
@@ -208,8 +211,6 @@ class MyGame(arcade.Window):
             for small_meteor in hit_list:
                 small_meteor.remove_from_sprite_lists()
                 self.score += 5
-            if bullet.bottom > SCREEN_HEIGHT:
-                bullet.remove_from_sprite_lists()
 
     def update(self, delta_time):
         self.ship_sprite.angle += self.ship_sprite.change_angle
@@ -223,7 +224,7 @@ class MyGame(arcade.Window):
             big.remove_from_sprite_lists()
             self.score -= 1
             arcade.play_sound(self.big_hit_sound)
-            self.ship_life_list[0].remove_from_sprite_lists()
+            self.ship_life_list.pop().remove_from_sprite_lists()
             self.lives -= 1
 
         small_meteor_hit_list = arcade.check_for_collision_with_list(self.ship_sprite, self.small_meteor_list)
@@ -231,8 +232,9 @@ class MyGame(arcade.Window):
             small.remove_from_sprite_lists()
             self.score -= 5
             arcade.play_sound(self.small_hit_sound)
-            self.ship_life_list[0].remove_from_sprite_lists()
+            self.ship_life_list.pop().remove_from_sprite_lists()
             self.lives -= 1
+
         self.process_ship_bullets()
 
 
