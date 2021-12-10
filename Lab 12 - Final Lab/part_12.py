@@ -29,16 +29,38 @@ class MenuView(arcade.View):
 
     def on_show(self):
         """ Called when switching to this view"""
-        arcade.set_background_color(arcade.color.WHITE)
+        arcade.set_background_color(arcade.color.BLACK)
 
     def on_draw(self):
         """ Draw the menu """
         arcade.start_render()
         arcade.draw_text("Menu Screen - click to advance", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2,
-                         arcade.color.BLACK, font_size=30, anchor_x="center")
+                         arcade.color.WHITE, font_size=30, anchor_x="center")
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """ Use a mouse press to advance to the 'game' view. """
+        instructions_view = InstructionView()
+        self.window.show_view(instructions_view)
+
+
+class InstructionView(arcade.View):
+    def on_show(self):
+        arcade.set_background_color(arcade.color.BLACK)
+
+    def on_draw(self):
+        arcade.start_render()
+        arcade.draw_text("Instructions Screen", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100,
+                         arcade.color.WHITE, font_size=50, anchor_x="center")
+        arcade.draw_text("Left mouse click to shoot", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 200,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")
+        arcade.draw_text("Press A and D to rotate sideways", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 300,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")
+        arcade.draw_text("Use the mouse to move", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 400,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")
+        arcade.draw_text("Click to advance", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 500,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")
+
+    def on_mouse_press(self, x, y, button, modifiers):
         my_game = MyGame()
         my_game.setup()
         self.window.show_view(my_game)
@@ -49,6 +71,7 @@ class GameOverView(arcade.View):
     def __init__(self):
         super().__init__()
         self.background = arcade.load_texture("stars.png")
+        self.set_mouse_visible = False
 
     def on_show(self):
         """ Called when switching to this view"""
@@ -61,6 +84,9 @@ class GameOverView(arcade.View):
 
         gameover = f"GAME OVER"
         arcade.draw_text(gameover, 300, 300, arcade.color.RED, 25)
+
+        arcade.draw_text("Press esc key to restart", SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100,
+                         arcade.color.WHITE, font_size=30, anchor_x="center")
 
     def on_key_press(self, key, _modifiers):
         """ If user hits escape, go back to the main menu view """
@@ -91,7 +117,7 @@ class Ship(arcade.Sprite):
 
 class Small(arcade.Sprite):
     def reset_pos(self):
-        self.center_y = random.randrange(SCREEN_HEIGHT + 20, SCREEN_HEIGHT + 100)
+        self.center_y = random.randrange(SCREEN_HEIGHT + 40, SCREEN_HEIGHT + 100)
         self.center_x = random.randrange(SCREEN_WIDTH)
 
     def update(self):
@@ -145,6 +171,8 @@ class MyGame(arcade.View):
         self.lives = 3
 
         self.background = None
+
+        self.window.set_mouse_visible(False)
 
     def setup(self):
         self.ship_list = arcade.SpriteList()
